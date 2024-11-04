@@ -1,0 +1,14 @@
+---
+title: "aescos_omics_PEC1"
+output: html_document
+date: "2024-11-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+rm(list = ls())
+```
