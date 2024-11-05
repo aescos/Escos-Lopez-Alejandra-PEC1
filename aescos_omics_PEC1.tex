@@ -1,0 +1,549 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={aescos\_omics\_PEC1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{aescos\_omics\_PEC1}
+\author{}
+\date{\vspace{-2.5em}2024-11-04}
+
+\begin{document}
+\maketitle
+
+To erase data and start clean:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+To push changes in Git after working on the PEC1.
+
+Los datos que voy a emplear: Descripcion:
+
+``The acompanying dataset has been obtained from a phosphoproteomics
+experiment that was performed to analyze (3 + 3) PDX models of two
+different subtypes using Phosphopeptide enriched samples. LC-MS analysis
+of 2 technical duplicates has been performed on each sample. The results
+set consisted of Normalized abundances of MS signals for ca. 1400
+phosphopeptides Goal of the analysis: *search phosphopeptides that allow
+differentiation of the two tumor groups This should be made with both
+Statistical Analysis and visualization. Data have been provided as an
+excel file: TIO2+PTYR-human-MSS+MSIvsPD.XLSX
+
+Groups are defined as:
+
+MSS group: Samples M1, M5 and T49, PD group: Samples M42, M43 and M64
+with two technical replicates for each sample The first column,
+SequenceModification contains abundance values for the distinct
+phosphopetides. Other columns can be omitted.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\NormalTok{data\_phospho }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"TIO2+PTYR{-}human{-}MSS+MSIvsPD.XLSX"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(data\_phospho)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 18
+##   SequenceModifications   Accession Description Score M1_1_MSS M1_2_MSS M5_1_MSS
+##   <chr>                   <chr>     <chr>       <dbl>    <dbl>    <dbl>    <dbl>
+## 1 LYPELSQYMGLSLNEEEIR[2]~ O00560    Syntenin-1~  48.1     24.3   44476.       0 
+## 2 VDKVIQAQTAFSANPANPAILS~ O00560    Syntenin-1~  67.0      0     43139.    2102.
+## 3 VIQAQTAFSANPANPAILSEAS~ O00560    Syntenin-1~  77.7   3413.   172143.   77323.
+## 4 HADAEMTGYVVTR[6] Oxida~ O15264    Mitogen-ac~  44.9 220431.   145657.  104288.
+## 5 HADAEMTGYVVTR[9] Phosp~ O15264    Mitogen-ac~  67.4  18255.     8530.   35956.
+## 6 STGPGASLGTGYDR[12] Pho~ O15551    Claudin-3 ~  63.7 644513.   261938.  187023.
+## # i 11 more variables: M5_2_MSS <dbl>, T49_1_MSS <dbl>, T49_2_MSS <dbl>,
+## #   M42_1_PD <dbl>, M42_2_PD <dbl>, M43_1_PD <dbl>, M43_2_PD <dbl>,
+## #   M64_1_PD <dbl>, M64_2_PD <dbl>, CLASS <chr>, PHOSPHO <chr>
+\end{verbatim}
+
+Las anotaciones sobre los datos son las siguientes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anotacion }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"TIO2+PTYR{-}human{-}MSS+MSIvsPD.XLSX"}\NormalTok{, }\AttributeTok{sheet =} \StringTok{"targets"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## * `Sample` -> `Sample...1`
+## * `Sample` -> `Sample...2`
+\end{verbatim}
+
+Voy a testar a ver si hay duplicados primero para poder ver que utilizo
+como row names.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Duplicados basados en una columna específica}
+\NormalTok{duplicados\_peptide\_dplyr }\OtherTok{\textless{}{-}}\NormalTok{ data\_phospho }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{duplicated}\NormalTok{(SequenceModifications) }\SpecialCharTok{|} \FunctionTok{duplicated}\NormalTok{(SequenceModifications, }\AttributeTok{fromLast =} \ConstantTok{TRUE}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(duplicados\_peptide\_dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 18
+##   SequenceModifications   Accession Description Score M1_1_MSS M1_2_MSS M5_1_MSS
+##   <chr>                   <chr>     <chr>       <dbl>    <dbl>    <dbl>    <dbl>
+## 1 GEPNVSYICSR[7] Phospho~ P49840    Glycogen s~  54.3   1.18e7 8689448. 5130833.
+## 2 GEPNVSYICSR[7] Phospho~ P49840    Glycogen s~  46.9   1.79e4   17796.    3683.
+## # i 11 more variables: M5_2_MSS <dbl>, T49_1_MSS <dbl>, T49_2_MSS <dbl>,
+## #   M42_1_PD <dbl>, M42_2_PD <dbl>, M43_1_PD <dbl>, M43_2_PD <dbl>,
+## #   M64_1_PD <dbl>, M64_2_PD <dbl>, CLASS <chr>, PHOSPHO <chr>
+\end{verbatim}
+
+Aquí podemos observar que hay un peptido duplicado pero cuando vemos el
+lugar de fosforilacion en la utlima columna es distinto. El primer lugar
+de fosforilacion es Y (tirosina) y el segundo es S/T (Serina/Treoina)
+por lo tanto no esta duplicado el peptido. Por lo tanto voy a unir las
+dos columnas por un ``-'' y asi seria una lista unica de peptidos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(stringr)}
+\NormalTok{data\_phospho.unica }\OtherTok{\textless{}{-}}\NormalTok{ data\_phospho }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{unica =} \FunctionTok{str\_c}\NormalTok{(SequenceModifications, PHOSPHO, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Ahora querria tener los nombres de los genes, gene symbol, puesto que es
+mas sencillo de comprender a la hora de interpretar los resultados. Para
+ello vamos a utilizar Biomart. Corremos la instalacion del paquete tan
+solo una vez.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(biomaRt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Conectar al servidor de Ensembl}
+\NormalTok{ensembl }\OtherTok{\textless{}{-}} \FunctionTok{useMart}\NormalTok{(}\StringTok{"ensembl"}\NormalTok{, }\AttributeTok{dataset =} \StringTok{"hsapiens\_gene\_ensembl"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Lista de códigos de Accession (uniprotswissprot)}
+\NormalTok{accession\_codes }\OtherTok{\textless{}{-}}\NormalTok{ data\_phospho[,}\DecValTok{2}\NormalTok{]}
+
+\CommentTok{\# Realizar la consulta}
+\NormalTok{gene\_symbols }\OtherTok{\textless{}{-}} \FunctionTok{getBM}\NormalTok{(}
+  \AttributeTok{attributes =} \FunctionTok{c}\NormalTok{(}\StringTok{"ensembl\_gene\_id"}\NormalTok{,}\StringTok{"uniprotswissprot"}\NormalTok{, }\StringTok{"description"}\NormalTok{,}\StringTok{"hgnc\_symbol"}\NormalTok{,}\StringTok{"gene\_biotype"}\NormalTok{), }\CommentTok{\# Obtenemos distintos codigos para el mismo gen.}
+  \AttributeTok{filters =} \StringTok{"uniprotswissprot"}\NormalTok{,}
+  \AttributeTok{values =}\NormalTok{ accession\_codes,}
+  \AttributeTok{mart =}\NormalTok{ ensembl}
+\NormalTok{)}
+
+\CommentTok{\# Mostrar resultados}
+\FunctionTok{head}\NormalTok{(gene\_symbols)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   ensembl_gene_id uniprotswissprot
+## 1 ENSG00000156603           A0JLT2
+## 2 ENSG00000188522           A6ND36
+## 3 ENSG00000196531           E9PAV3
+## 4 ENSG00000110696           O00193
+## 5 ENSG00000101856           O00264
+## 6 ENSG00000103319           O00418
+##                                                                               description
+## 1                         mediator complex subunit 19 [Source:HGNC Symbol;Acc:HGNC:29600]
+## 2         family with sequence similarity 83 member G [Source:HGNC Symbol;Acc:HGNC:32554]
+## 3 nascent polypeptide associated complex subunit alpha [Source:HGNC Symbol;Acc:HGNC:7629]
+## 4                 chromosome 11 open reading frame 58 [Source:HGNC Symbol;Acc:HGNC:16990]
+## 5          progesterone receptor membrane component 1 [Source:HGNC Symbol;Acc:HGNC:16090]
+## 6               eukaryotic elongation factor 2 kinase [Source:HGNC Symbol;Acc:HGNC:24615]
+##   hgnc_symbol   gene_biotype
+## 1       MED19 protein_coding
+## 2      FAM83G protein_coding
+## 3        NACA protein_coding
+## 4    C11orf58 protein_coding
+## 5      PGRMC1 protein_coding
+## 6       EEF2K protein_coding
+\end{verbatim}
+
+Unimos ambas listas para que contenga toda la informacion para cada
+peptido.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cambiar el nombre de la columna con dplyr}
+\NormalTok{gene\_symbols }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{rename}\NormalTok{(gene\_symbols, }\AttributeTok{Accession =}\NormalTok{ uniprotswissprot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gene\_symbols }\OtherTok{\textless{}{-}}\NormalTok{ gene\_symbols }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Accession, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Union izquierda, en este caso por data\_phospho.unica}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(data\_phospho.unica, gene\_symbols, }\AttributeTok{by =} \StringTok{"Accession"}\NormalTok{)}
+
+\CommentTok{\# Eliminar duplicados basados en la columna "unica"}
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(unica, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,437 x 23
+##    SequenceModifications  Accession Description Score M1_1_MSS M1_2_MSS M5_1_MSS
+##    <chr>                  <chr>     <chr>       <dbl>    <dbl>    <dbl>    <dbl>
+##  1 LYPELSQYMGLSLNEEEIR[2~ O00560    Syntenin-1~  48.1     24.3   44476.       0 
+##  2 VDKVIQAQTAFSANPANPAIL~ O00560    Syntenin-1~  67.0      0     43139.    2102.
+##  3 VIQAQTAFSANPANPAILSEA~ O00560    Syntenin-1~  77.7   3413.   172143.   77323.
+##  4 HADAEMTGYVVTR[6] Oxid~ O15264    Mitogen-ac~  44.9 220431.   145657.  104288.
+##  5 HADAEMTGYVVTR[9] Phos~ O15264    Mitogen-ac~  67.4  18255.     8530.   35956.
+##  6 STGPGASLGTGYDR[12] Ph~ O15551    Claudin-3 ~  63.7 644513.   261938.  187023.
+##  7 DHVYGIHNPVMTSPSQH[4] ~ O43490    Prominin-1~  40.7 686820.   331984.  252694.
+##  8 DHVYGIHNPVMTSPSQH[4] ~ O43490    Prominin-1~  58.3 815186.   728701.  267179.
+##  9 RMDSEDVYDDVETIPMK[2] ~ O43490    Prominin-1~  60.9   1578.     9836.    2033.
+## 10 RMDSEDVYDDVETIPMK[2] ~ O43490    Prominin-1~  47.4   2815.    13247.    2121.
+## # i 1,427 more rows
+## # i 16 more variables: M5_2_MSS <dbl>, T49_1_MSS <dbl>, T49_2_MSS <dbl>,
+## #   M42_1_PD <dbl>, M42_2_PD <dbl>, M43_1_PD <dbl>, M43_2_PD <dbl>,
+## #   M64_1_PD <dbl>, M64_2_PD <dbl>, CLASS <chr>, PHOSPHO <chr>, unica <chr>,
+## #   ensembl_gene_id <chr>, description <chr>, hgnc_symbol <chr>,
+## #   gene_biotype <chr>
+\end{verbatim}
+
+Poner los datos en formato SummarizedExperiment:
+
+Instalamos e inicializamos la libreria.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Seleccionar columnas de la matriz}
+\NormalTok{data }\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(data, }\AttributeTok{row.names =} \StringTok{"unica"}\NormalTok{)}
+\NormalTok{matrix }\OtherTok{\textless{}{-}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(data, M1\_1\_MSS, M1\_2\_MSS, M5\_1\_MSS, M5\_2\_MSS, T49\_1\_MSS, T49\_2\_MSS, M42\_1\_PD, M42\_2\_PD, M43\_1\_PD, M43\_2\_PD, M64\_1\_PD, M64\_2\_PD) }
+\NormalTok{matrix }\OtherTok{\textless{}{-}}\NormalTok{ matrix }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as.matrix}\NormalTok{()}
+
+\CommentTok{\# Metadatos de las filas (genes)}
+\NormalTok{data }\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(data)}
+\NormalTok{row\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{ensembl\_gene\_id =}\NormalTok{ data[,}\DecValTok{19}\NormalTok{],}
+  \AttributeTok{description =}\NormalTok{ data[,}\DecValTok{20}\NormalTok{],}
+  \AttributeTok{row.names =} \FunctionTok{row.names}\NormalTok{(data),}
+  \AttributeTok{Symbol =}\NormalTok{ data[,}\DecValTok{21}\NormalTok{]}
+\NormalTok{)}
+
+\CommentTok{\# Metadatos de las columnas (muestras)}
+\NormalTok{col\_data }\OtherTok{\textless{}{-}}\NormalTok{ anotacion}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear el objeto SummarizedExperiment}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{SummarizedExperiment}\NormalTok{(}
+  \AttributeTok{assays =} \FunctionTok{list}\NormalTok{(}\AttributeTok{counts =}\NormalTok{ matrix),  }\CommentTok{\# Asignar los datos de expresión}
+  \AttributeTok{rowData =}\NormalTok{ row\_data,              }\CommentTok{\# Asignar los metadatos de los genes}
+  \AttributeTok{colData =}\NormalTok{ col\_data               }\CommentTok{\# Asignar los metadatos de las muestras}
+\NormalTok{)}
+
+\CommentTok{\# Mostrar el objeto}
+\FunctionTok{print}\NormalTok{(se)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## class: SummarizedExperiment 
+## dim: 1437 12 
+## metadata(0):
+## assays(1): counts
+## rownames(1437): LYPELSQYMGLSLNEEEIR[2] Phospho|[9] Oxidation-Y
+##   VDKVIQAQTAFSANPANPAILSEASAPIPHDGNLYPR[35] Phospho-Y ...
+##   YQDEVFGGFVTEPQEESEEEVEEPEER[17] Phospho-S/T YSPSQNSPIHHIPSRR[1]
+##   Phospho|[7] Phospho-S/T
+## rowData names(3): ensembl_gene_id description Symbol
+## colnames(12): M1_1_MSS M1_2_MSS ... M64_1_PD M64_2_PD
+## colData names(4): Sample...1 Sample...2 Individual Phenotype
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{save}\NormalTok{(se, }\AttributeTok{file =} \StringTok{"Phosphoproteomics.Rda"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Estadisticos descriptivos}\label{estadisticos-descriptivos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'kableExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     M1_1_MSS           M1_2_MSS           M5_1_MSS           M5_2_MSS       
+##  Min.   :       0   Min.   :       0   Min.   :       0   Min.   :       0  
+##  1st Qu.:    5651   1st Qu.:    5488   1st Qu.:    2567   1st Qu.:    3261  
+##  Median :   30871   Median :   27001   Median :   20749   Median :   26067  
+##  Mean   :  229986   Mean   :  253312   Mean   :  233072   Mean   :  261212  
+##  3rd Qu.:  117475   3rd Qu.:  113194   3rd Qu.:  114138   3rd Qu.:  130208  
+##  Max.   :16719906   Max.   :43928481   Max.   :15135169   Max.   :19631820  
+##    T49_1_MSS          T49_2_MSS           M42_1_PD           M42_2_PD       
+##  Min.   :       0   Min.   :       0   Min.   :       0   Min.   :       0  
+##  1st Qu.:    9293   1st Qu.:    8607   1st Qu.:    5393   1st Qu.:    4214  
+##  Median :   55654   Median :   46397   Median :   36887   Median :   30597  
+##  Mean   :  542800   Mean   :  462909   Mean   :  388693   Mean   :  333813  
+##  3rd Qu.:  223267   3rd Qu.:  189197   3rd Qu.:  180508   3rd Qu.:  152696  
+##  Max.   :49218872   Max.   :29240206   Max.   :48177680   Max.   :42558111  
+##     M43_1_PD           M43_2_PD           M64_1_PD           M64_2_PD       
+##  Min.   :       0   Min.   :       0   Min.   :       0   Min.   :       0  
+##  1st Qu.:   19633   1st Qu.:   17226   1st Qu.:   11037   1st Qu.:    8655  
+##  Median :   67737   Median :   59598   Median :   52310   Median :   47454  
+##  Mean   :  349175   Mean   :  358976   Mean   :  470967   Mean   :  485038  
+##  3rd Qu.:  205615   3rd Qu.:  201931   3rd Qu.:  210268   3rd Qu.:  206426  
+##  Max.   :35049402   Max.   :63082982   Max.   :71750330   Max.   :88912734
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{groupColors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\DecValTok{6}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\DecValTok{6}\NormalTok{)) }\CommentTok{\# Coloreamos por metodos de enriquecimiento de phosphopeptidos.}
+\FunctionTok{boxplot}\NormalTok{(matrix, }\AttributeTok{col=}\NormalTok{groupColors, }\AttributeTok{main=}\StringTok{"Expression values of each sample"}\NormalTok{,}
+    \AttributeTok{xlab=}\StringTok{"Samples"}\NormalTok{,}
+    \AttributeTok{ylab=}\StringTok{"Expression"}\NormalTok{, }\AttributeTok{las=}\DecValTok{2}\NormalTok{, }\AttributeTok{cex.axis=}\FloatTok{0.7}\NormalTok{, }\AttributeTok{cex.main=}\FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aescos_omics_PEC1_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+Aqui es dificil ver la media de valores asi que vamos a transformar los
+valores a log2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logM }\OtherTok{\textless{}{-}}\FunctionTok{log2}\NormalTok{(matrix }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\CommentTok{\# sumamos 1 porque los valores son muy bajos y asi evitamos valores proximos a 0.}
+\NormalTok{groupColors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\DecValTok{6}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\DecValTok{6}\NormalTok{)) }\CommentTok{\# Coloreamos por metodos de enriquecimiento de phosphopeptidos.}
+\FunctionTok{boxplot}\NormalTok{(logM, }\AttributeTok{col=}\NormalTok{groupColors, }\AttributeTok{main=}\StringTok{"Expression values of each sample"}\NormalTok{,}
+    \AttributeTok{xlab=}\StringTok{"Samples"}\NormalTok{,}
+    \AttributeTok{ylab=}\StringTok{"Expression"}\NormalTok{, }\AttributeTok{las=}\DecValTok{2}\NormalTok{, }\AttributeTok{cex.axis=}\FloatTok{0.7}\NormalTok{, }\AttributeTok{cex.main=}\FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aescos_omics_PEC1_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+Aqui podemos ver que los duplicados se parecen entre ellos lo cual es lo
+ideal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pcX}\OtherTok{\textless{}{-}}\FunctionTok{prcomp}\NormalTok{(}\FunctionTok{t}\NormalTok{(logM), }\AttributeTok{scale=}\ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# Ya se han escalado los datos}
+\NormalTok{loads}\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(pcX}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(pcX}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# Then plot the first two components.}
+
+\NormalTok{xlab}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"PC1"}\NormalTok{,loads[}\DecValTok{1}\NormalTok{],}\StringTok{"\%"}\NormalTok{))}
+\NormalTok{ylab}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"PC2"}\NormalTok{,loads[}\DecValTok{2}\NormalTok{],}\StringTok{"\%"}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(pcX}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{],}\AttributeTok{xlab=}\NormalTok{xlab,}\AttributeTok{ylab=}\NormalTok{ylab, }\AttributeTok{col=}\NormalTok{groupColors, }
+     \AttributeTok{main =}\StringTok{"Principal components (PCA)"}\NormalTok{)}
+\CommentTok{\#names2plot\textless{}{-}paste0(substr(names(matrix),1,3), 1:6)}
+\NormalTok{names2plot }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(matrix)}
+\FunctionTok{text}\NormalTok{(pcX}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{1}\NormalTok{],pcX}\SpecialCharTok{$}\NormalTok{x[,}\DecValTok{2}\NormalTok{],names2plot, }\AttributeTok{pos=}\DecValTok{2}\NormalTok{, }\AttributeTok{cex=}\NormalTok{.}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aescos_omics_PEC1_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Aqui podemos observar que las muestras duplicadas no se replican muy
+bien y que que como mucho se separan las muestras por PD y MSS que son
+dos metodos distintos de enriquecer los fosfopeptidos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(pheatmap)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{logM }\OtherTok{\textless{}{-}}\FunctionTok{log2}\NormalTok{(matrix }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}
+\CommentTok{\# Crear un heatmap con etiquetas, colores personalizados y valores mostrados}
+\NormalTok{heatmap\_result }\OtherTok{\textless{}{-}} \FunctionTok{pheatmap}\NormalTok{(}
+\NormalTok{  logM, }
+  \AttributeTok{color =} \FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"white"}\NormalTok{, }\StringTok{"red"}\NormalTok{))(}\DecValTok{50}\NormalTok{),  }\CommentTok{\# Gradiente de colores}
+  \AttributeTok{cluster\_rows =} \ConstantTok{TRUE}\NormalTok{,      }\CommentTok{\# Agrupar genes (filas)}
+  \AttributeTok{cluster\_cols =} \ConstantTok{TRUE}\NormalTok{,      }\CommentTok{\# Agrupar muestras/condiciones (columnas)}
+  \AttributeTok{show\_rownames =} \ConstantTok{FALSE}\NormalTok{,     }\CommentTok{\# Mostrar nombres de genes}
+  \AttributeTok{show\_colnames =} \ConstantTok{TRUE}\NormalTok{,      }\CommentTok{\# Mostrar nombres de muestras}
+\NormalTok{)}
+\FunctionTok{print}\NormalTok{(heatmap\_result)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{aescos_omics_PEC1_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+Podemos observar que se agrupan el metodo de enriquecimiento de peptidos
+y por duplicados de muestra. Los heatmaps son muy utiles para analizar
+patrones mas profundamente.
+
+\end{document}

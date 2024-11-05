@@ -1,6 +1,8 @@
 ---
 title: "aescos_omics_PEC1"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 date: "2024-11-04"
 ---
 
@@ -34,9 +36,191 @@ PD group: Samples M42, M43 and M64 with two technical replicates for each sample
 ```{r}
 library(readxl)
 data_phospho <- read_excel("TIO2+PTYR-human-MSS+MSIvsPD.XLSX")
-View(data_phospho)
-
-targets <- read_excel("TIO2+PTYR-human-MSS+MSIvsPD.XLSX", sheet = "targets")
-View(targets)
+head(data_phospho)
 ```
 
+Las anotaciones sobre los datos son las siguientes:
+
+```{r}
+anotacion <- read_excel("TIO2+PTYR-human-MSS+MSIvsPD.XLSX", sheet = "targets")
+```
+
+Voy a testar a ver si hay duplicados primero para poder ver que utilizo como row names.
+
+```{r}
+library(dplyr)
+# Duplicados basados en una columna específica
+duplicados_peptide_dplyr <- data_phospho %>%
+  filter(duplicated(SequenceModifications) | duplicated(SequenceModifications, fromLast = TRUE))
+
+print(duplicados_peptide_dplyr)
+```
+Aquí podemos observar que hay un peptido duplicado pero cuando vemos el lugar de fosforilacion en la utlima columna es distinto. El primer lugar de fosforilacion es Y (tirosina) y el segundo es S/T (Serina/Treoina) por lo tanto no esta duplicado el peptido. Por lo tanto voy a unir las dos columnas por un "-" y asi seria una lista unica de peptidos.
+
+```{r}
+library(stringr)
+data_phospho.unica <- data_phospho %>%
+  mutate(unica = str_c(SequenceModifications, PHOSPHO, sep = "-"))
+```
+
+Ahora querria tener los nombres de los genes, gene symbol, puesto que es mas sencillo de comprender a la hora de interpretar los resultados. Para ello vamos a utilizar Biomart. Corremos la instalacion del paquete tan solo una vez.
+
+```{r eval=FALSE, include=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("biomaRt")
+```
+
+```{r}
+library(biomaRt)
+```
+
+```{r}
+# Conectar al servidor de Ensembl
+ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+```
+
+```{r}
+# Lista de códigos de Accession (uniprotswissprot)
+accession_codes <- data_phospho[,2]
+
+# Realizar la consulta
+gene_symbols <- getBM(
+  attributes = c("ensembl_gene_id","uniprotswissprot", "description","hgnc_symbol","gene_biotype"), # Obtenemos distintos codigos para el mismo gen.
+  filters = "uniprotswissprot",
+  values = accession_codes,
+  mart = ensembl
+)
+
+# Mostrar resultados
+head(gene_symbols)
+```
+
+Unimos ambas listas para que contenga toda la informacion para cada peptido.
+```{r}
+# Cambiar el nombre de la columna con dplyr
+gene_symbols <- dplyr::rename(gene_symbols, Accession = uniprotswissprot)
+```
+
+```{r}
+gene_symbols <- gene_symbols %>% distinct(Accession, .keep_all = TRUE)
+
+# Union izquierda, en este caso por data_phospho.unica
+data <- inner_join(data_phospho.unica, gene_symbols, by = "Accession")
+
+# Eliminar duplicados basados en la columna "unica"
+data <- data %>% distinct(unica, .keep_all = TRUE)
+print(data)
+```
+
+Poner los datos en formato SummarizedExperiment:
+
+Instalamos e inicializamos la libreria.
+
+```{r eval=FALSE, include=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("SummarizedExperiment")
+```
+
+```{r include=FALSE}
+library(SummarizedExperiment)
+```
+
+```{r}
+# Seleccionar columnas de la matriz
+data <-data.frame(data, row.names = "unica")
+matrix <- dplyr::select(data, M1_1_MSS, M1_2_MSS, M5_1_MSS, M5_2_MSS, T49_1_MSS, T49_2_MSS, M42_1_PD, M42_2_PD, M43_1_PD, M43_2_PD, M64_1_PD, M64_2_PD) 
+matrix <- matrix %>% as.matrix()
+
+# Metadatos de las filas (genes)
+data <-data.frame(data)
+row_data <- data.frame(
+  ensembl_gene_id = data[,19],
+  description = data[,20],
+  row.names = row.names(data),
+  Symbol = data[,21]
+)
+
+# Metadatos de las columnas (muestras)
+col_data <- anotacion
+```
+
+```{r}
+# Crear el objeto SummarizedExperiment
+se <- SummarizedExperiment(
+  assays = list(counts = matrix),  # Asignar los datos de expresión
+  rowData = row_data,              # Asignar los metadatos de los genes
+  colData = col_data               # Asignar los metadatos de las muestras
+)
+
+# Mostrar el objeto
+print(se)
+save(se, file = "Phosphoproteomics.Rda")
+```
+
+## Estadisticos descriptivos
+
+```{r}
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+summary(matrix)
+```
+
+```{r}
+groupColors <- c(rep("red", 6), rep("blue", 6)) # Coloreamos por metodos de enriquecimiento de phosphopeptidos.
+boxplot(matrix, col=groupColors, main="Expression values of each sample",
+    xlab="Samples",
+    ylab="Expression", las=2, cex.axis=0.7, cex.main=0.7)
+```
+
+Aqui es dificil ver la media de valores asi que vamos a transformar los valores a log2.
+
+```{r}
+logM <-log2(matrix + 1) # sumamos 1 porque los valores son muy bajos y asi evitamos valores proximos a 0.
+groupColors <- c(rep("red", 6), rep("blue", 6)) # Coloreamos por metodos de enriquecimiento de phosphopeptidos.
+boxplot(logM, col=groupColors, main="Expression values of each sample",
+    xlab="Samples",
+    ylab="Expression", las=2, cex.axis=0.7, cex.main=0.7)
+```
+
+Aqui podemos ver que los duplicados se parecen entre ellos lo cual es lo ideal.
+
+```{r}
+pcX<-prcomp(t(logM), scale=FALSE) # Ya se han escalado los datos
+loads<- round(pcX$sdev^2/sum(pcX$sdev^2)*100,1)
+# Then plot the first two components.
+
+xlab<-c(paste("PC1",loads[1],"%"))
+ylab<-c(paste("PC2",loads[2],"%"))
+plot(pcX$x[,1:2],xlab=xlab,ylab=ylab, col=groupColors, 
+     main ="Principal components (PCA)")
+#names2plot<-paste0(substr(names(matrix),1,3), 1:6)
+names2plot <- colnames(matrix)
+text(pcX$x[,1],pcX$x[,2],names2plot, pos=2, cex=.6)
+```
+
+Aqui podemos observar que las muestras duplicadas no se replican muy bien y que que como mucho se separan las muestras por PD y MSS que son dos metodos distintos de enriquecer los fosfopeptidos. 
+
+```{r}
+library(pheatmap)
+```
+
+```{r}
+logM <-log2(matrix + 1)
+# Crear un heatmap con etiquetas, colores personalizados y valores mostrados
+heatmap_result <- pheatmap(
+  logM, 
+  color = colorRampPalette(c("blue", "white", "red"))(50),  # Gradiente de colores
+  cluster_rows = TRUE,      # Agrupar genes (filas)
+  cluster_cols = TRUE,      # Agrupar muestras/condiciones (columnas)
+  show_rownames = FALSE,     # Mostrar nombres de genes
+  show_colnames = TRUE,      # Mostrar nombres de muestras
+)
+print(heatmap_result)
+```
+
+Podemos observar que se agrupan el metodo de enriquecimiento de peptidos y por duplicados de muestra. Los heatmaps son muy utiles para analizar patrones mas profundamente. 
